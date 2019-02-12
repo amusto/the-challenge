@@ -45,6 +45,7 @@ openSansObserver.load().then(() => {
 const initialState = {};
 const history = createHistory();
 const store = configureStore(initialState, history);
+
 const MOUNT_NODE = document.getElementById('app');
 
 const render = () => {

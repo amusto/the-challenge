@@ -11,10 +11,29 @@
  * @param {} values An immutable Map of values from Redux Form
  * @returns An errors object with any validation errors
  */
-export const validate = (values) => {
+const validate = (values) => {
   const errors = {};
 
   // TODO: Validate that the user has entered a username, first name, and last name
+  if (!values.get('first_name')) {
+    errors.first_name = 'Required';
+  } else if (values.get('first_name').length > 40) {
+    errors.first_name = 'Must be 50 characters or less';
+  }
+
+  if (!values.get('last_name')) {
+    errors.last_name = 'Required';
+  } else if (values.get('last_name').length > 40) {
+    errors.last_name = 'Must be 50 characters or less';
+  }
+
+  if (!values.get('user_name')) {
+    errors.user_name = 'Required';
+  } else if (values.get('user_name').length > 15) {
+    errors.user_name = 'Must be 15 characters or less';
+  }
 
   return errors;
 };
+
+export default validate;

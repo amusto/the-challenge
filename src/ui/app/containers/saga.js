@@ -18,14 +18,16 @@ import { DISPATCH_ACTIONS } from './constants';
 
 export function* getLuckyNumber({ username }) {
   // TODO: What port is the service layer running on again?
-  const requestUrl = 'http://localhost:???/lucky-number';
-
+  const requestUrl = 'http://localhost:1337/lucky-number?username=${username}';
   try {
-    const result = yield call(request, requestUrl);
+    const luckyNumber = yield call(request, requestUrl);
+
+    yield put({ type: DISPATCH_ACTIONS.LUCKYNUMBER_RECEIVED, payload: luckyNumber })
 
     // TODO: Do stuff with the result
   } catch (err) {
     // TODO: Bonus points for some error handling
+    console.log(err)
   }
 }
 

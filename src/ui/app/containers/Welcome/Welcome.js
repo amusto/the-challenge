@@ -10,6 +10,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
+
 import { Helmet } from 'react-helmet';
 
 import injectSaga from 'utils/injectSaga';
@@ -17,7 +18,7 @@ import injectReducer from 'utils/injectReducer';
 
 import WelcomeForm from 'components/WelcomeForm/WelcomeForm';
 
-import { CONTAINER_KEY } from '../constants';
+import { CONTAINER_KEY, DISPATCH_ACTIONS } from '../constants';
 import saga from '../saga';
 import reducer from '../reducer';
 
@@ -35,11 +36,21 @@ class Welcome extends React.PureComponent {
    * @param {*} values An immutable map of the Redux Form values
    */
   submit(values) {
-    const { dispatch } = this.props;
+    const { dispatch, getState, history } = this.props;
 
-    // TODO: Get the form values and invoke the service layer
+    let username  = values.get('user_name');
+    let firstname  = values.get('first_name');
+    let lastname  = values.get('last_name');
+    let user = {
+      username,
+      firstname,
+      lastname
+    }
 
-    dispatch(???);
+    dispatch({type: DISPATCH_ACTIONS.GET_LUCKY_NUMBER, payload: user});
+    setTimeout(function(){
+      history.push('/lucky')
+    }, 500);
   }
 
   render() {
@@ -50,8 +61,10 @@ class Welcome extends React.PureComponent {
         </Helmet>
 
         <div className="mt5 pa4 center w-25 bg-light-gray">
-          <WelcomeForm onSubmit={???} />
+          <WelcomeForm onSubmit={this.submit} />
         </div>
+
+        <div></div>
       </article>
     );
   }
